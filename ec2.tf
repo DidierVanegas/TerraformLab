@@ -23,32 +23,6 @@ resource "aws_instance" "instance" {
 
 }
 
-/*resource "null_resource" "null" {
-  count = length(aws_subnet.public_subnet.*.id)
-
-  provisioner "file" {
-    source      = "./userdata.sh"
-    destination = "/home/ec2-user/userdata.sh"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /home/ec2-user/userdata.sh",
-      "sh /home/ec2-user/userdata.sh",
-    ]
-    on_failure = continue
-  }
-
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    port        = "22"
-    host        = element(aws_eip.eip.*.public_ip, count.index)
-    private_key = file(var.ssh_private_key)
-  }
-
-}
-*/
 #Elastic IPs
 resource "aws_eip" "eip" {
   count            = length(aws_instance.instance.*.id)
